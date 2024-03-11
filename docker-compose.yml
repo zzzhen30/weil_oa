@@ -3,6 +3,6 @@ services:
   web:       # The term web is often used by convention to denote the primary web service of an application, especially if it's serving HTTP requests
     build: .
     ports:
-      - "1319:1319" # Maps port 5000 inside the container to port 8000 on your host
+      - "1319:1319" # Maps port 1319 inside the container to port 1319 on host
     volumes:
       - .:/app  # for live reload during development

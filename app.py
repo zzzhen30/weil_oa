@@ -12,7 +12,6 @@ app = Flask(__name__)
 app.config.from_object(DevelopmentConfig)
 
 # set database connection 
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////home/zzz/develop/Weil/randomized_chart_data.sqlite'
 db = SQLAlchemy(app)
 
 logging.basicConfig(level=logging.DEBUG)
