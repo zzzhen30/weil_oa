@@ -95,7 +95,6 @@ def getchartdata():
             'Unit_Of_Measure_Name': item.unit_of_measure.Name if item.unit_of_measure else 'None'
 
 
-
         })
     
     return jsonify(end_pt1_result)
@@ -131,6 +130,7 @@ def data_summary():
     observation_type,
     measure_unit,
     COUNT(DISTINCT HADM_ID) AS num_adm,
+    COUNT(VALUENUM) AS val_count, 
     MIN(VALUENUM) AS min_val,
     MAX(VALUENUM) AS max_val
     FROM _valid_tb vt 
@@ -152,8 +152,9 @@ def data_summary():
             "observation_type":row[0],
             "measure_unit":row[1],
             "num_adm":row[2],
-            "min_val":row[3],
-            "max_val":row[4]
+            "val_count": row[3],
+            "min_val":row[4],
+            "max_val":row[5]
         })
     return jsonify(data_summary)
 
@@ -194,6 +195,7 @@ def data_summary_pandas():
 
     summary_df = filtered_df.groupby(['observation_type','measure_unit']).agg(
         num_adm = ('HADM_ID','nunique'),
+        val_count=('VALUENUM', 'count'),
         min_val = ('VALUENUM','min'),
         max_val = ('VALUENUM','max')
     ).reset_index()
